@@ -17,8 +17,8 @@ jobs:
       - name: Check Lua syntax
         run: lua5.4 -e 'assert(loadfile("main.lua"))'
       - name: Check shell syntax
-        run: sh -n render.sh
+        run: sh -n assets/render.sh
       - name: Check Python syntax
-        run: python3 -m py_compile render.py
+        run: python3 -m py_compile assets/render.py
       - name: Test preload wiring
         run: lua5.4 test/preload_test.lua

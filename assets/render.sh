@@ -1,6 +1,9 @@
 #!/bin/sh
 # Yazi EPUB previewer backend: <book.epub> <out.png> <max-pixels>
 #
+# Lives in assets/ because `ya pkg` installs only LICENSE, README.md, main.lua,
+# root-level *.lua and the assets/ tree.
+#
 # Renders the book's first page through PyMuPDF, so no epub-thumbnailer /
 # gnome-epub-thumbnailer (both Linux-only) are involved.
 #

@@ -51,7 +51,7 @@ Optional, in `~/.config/yazi/init.lua`:
 
 ```lua
 require("epub-preview"):setup({
-	-- Default: <config>/plugins/epub-preview.yazi/render.sh
+	-- Default: <config>/plugins/epub-preview.yazi/assets/render.sh
 	renderer = "/path/to/render.sh",
 	-- Long edge of the rendered page, in pixels. Default: the preview pane's
 	-- own pixel budget (min of preview.max_width / preview.max_height).
@@ -66,7 +66,7 @@ point `EPUB_PREVIEW_PYTHON` at it instead of using `setup`.
 
 ```
 hover book.epub
-  └─ preload   render.sh → render.py → PyMuPDF → PNG
+  └─ preload   assets/render.sh → assets/render.py → PyMuPDF → PNG
   │              └─ ya.image_precache(png, ya.file_cache(job))
   └─ peek      ya.image_show(cache, job.area)
 ```
@@ -75,9 +75,22 @@ The page is cached per file by Yazi, so only the first hover pays for it
 (measured on an M-series Mac: 0.38 s cold, 0.01 s warm; a 3949-page book 1.4 s
 cold).
 
-`render.sh` probes candidate interpreters with `import pymupdf` instead of
-assuming, and `main.lua` invokes it as `sh render.sh` — `ya pkg` seals installed
-files read-only, so a shebang and an executable bit would not survive.
+`assets/render.sh` probes candidate interpreters with `import pymupdf` instead
+of assuming, and `main.lua` invokes it as `sh render.sh` — `ya pkg` seals
+installed files read-only, so a shebang and an executable bit would not survive.
+
+## Repository layout
+
+```
+main.lua            the plugin entry point
+assets/render.sh    interpreter probe, then hands off to render.py
+assets/render.py    the actual MuPDF render
+test/               offline tests, not installed
+```
+
+The helpers sit in `assets/` for a reason: `ya pkg` installs only `LICENSE`,
+`README.md`, `main.lua`, root-level `*.lua` and the `assets/` tree. A
+root-level `render.sh` would silently never be installed.
 
 ## Troubleshooting
 

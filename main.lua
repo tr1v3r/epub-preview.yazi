@@ -7,7 +7,7 @@
 -- EPUB therefore fell through to the `file` preset, whose entire output is
 -- "----- File Type Classification -----\n\nEPUB document".
 --
--- The pixels come from PyMuPDF (see render.sh / render.py). This mirrors the
+-- The pixels come from PyMuPDF (see assets/render.sh, assets/render.py). This
 -- built-in `pdf` preset: render out of process, precache into Yazi's image
 -- cache, then draw it.
 
@@ -24,9 +24,12 @@ function M:setup(opts)
 	self._size = opts.size
 end
 
+-- Helpers live in assets/ because `ya pkg` installs only LICENSE, README.md,
+-- main.lua, root-level *.lua and the assets/ tree -- a root-level render.sh
+-- would silently never be installed.
 -- Overridable, since Yazi does not tell a plugin where it was installed.
 function M:renderer()
-	return self._renderer or (config_dir() .. "/plugins/epub-preview.yazi/render.sh")
+	return self._renderer or (config_dir() .. "/plugins/epub-preview.yazi/assets/render.sh")
 end
 
 function M:size()

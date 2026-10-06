@@ -77,7 +77,7 @@ check("setup overrides the renderer", M:renderer() == "/custom/render.sh")
 check("setup overrides the size", M:size() == 512)
 M:setup({})
 check("default renderer is inside the plugin dir",
-	M:renderer():find("/plugins/epub-preview.yazi/render.sh", 1, true) ~= nil)
+	M:renderer():find("/plugins/epub-preview.yazi/assets/render.sh", 1, true) ~= nil)
 check("default size follows the preview pane", M:size() == 1800)
 
 os.remove(CACHE .. ".png")
